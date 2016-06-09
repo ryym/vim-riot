@@ -1,0 +1,33 @@
+# vim-riot
+
+[![License](http://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+
+This is a Vim plugin to provide syntax highlighting and indenting for
+[Riot.js] custom tags. [Riot custom tag] contains HTML, CSS and JS in it.
+The implementation is based on [vim-jsx].
+
+Note that [vim-javascript] is required to use this plugin.
+
+[Riot.js]: http://riotjs.com/
+[Riot custom tag]: http://riotjs.com/guide
+[vim-javascript]: https://github.com/pangloss/vim-javascript
+[vim-jsx]: https://github.com/mxw/vim-jsx 
+
+## Installation
+
+[NeoBundle](https://github.com/Shougo/neobundle.vim),
+[Vundle](https://github.com/VundleVim/Vundle.vim),
+[vim-plug](https://github.com/junegunn/vim-plug)
+
+```vim
+NeoBundle 'ryym/vim-riot'
+Plugin 'ryym/vim-riot'
+Plug 'ryym/vim-riot'
+```
+
+[pathogen](https://github.com/tpope/vim-pathogen)
+
+```bash
+cd ~/.vim/bundle
+git clone https://gihtub.com/ryym/vim-riot.git
+```
