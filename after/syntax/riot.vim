@@ -65,10 +65,17 @@ syntax region htmlRegion
 syntax region styleRegion
   \ contained
   \ keepend
-  \ contains=@CSS
+  \ contains=@CSS,styleTag
   \ start="\s\+<style\(\s\+scoped\)\?>"
   \ end="</style>"
   \ fold
+
+syntax match styleTag
+  \ "\s\+<style\(\s\+scoped\)\?>"
+  \ contained
+  \ contains=htmlTagName,styleTagAttr
+
+syntax keyword styleTagAttr contained scoped
 
 syntax region scriptRegion
   \ contained
@@ -96,5 +103,6 @@ highlight default link customTag Type
 highlight default link customEndTag Type
 highlight default link scriptTag htmlTag
 highlight default link scriptEndTag htmlEndTag
+highlight default link styleTagAttr htmlTag
 
 let b:current_syntax = "riot"
