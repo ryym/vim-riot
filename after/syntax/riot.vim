@@ -19,19 +19,6 @@ unlet! b:current_syntax
 
 " --- dependencies ---
 
-" XXX: htmlValue should not contain htmlArg and htmlString
-syntax match htmlValue
-  \ contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1
-  \ contains=htmlArg,htmlString,javaScriptExpression,@htmlPreproc
-
-" Expressions enclosed in curly braces should color as JS.
-" Note the trivial end pattern; we let jsBlock take care of ending the region.
-syntax region javaScriptExpression
-  \ start=+{+
-  \ end=++
-  \ contained
-  \ contains=jsBlock,javascriptBlock
-
 syntax region riotCustomTag
   \ keepend
   \ contains=customTag,styleRegion,scriptRegion,@JS,htmlRegion,customEndTag
@@ -47,7 +34,25 @@ syntax match customEndTag
   \ +^</[^ /!?<>"']\+>+
   \ contained
 
-" XXX:
+" FIXME: htmlValue should not contain htmlArg and htmlString
+syntax match htmlValue
+  \ contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1
+  \ contains=htmlArg,htmlString,javaScriptExpression,@htmlPreproc
+
+" Expressions enclosed in curly braces should color as JS.
+" Note the trivial end pattern; we let jsBlock take care of ending the region.
+syntax region javaScriptExpression
+  \ start=+{+
+  \ end=++
+  \ contained
+  \ contains=jsBlock,javascriptBlock
+
+syntax match htmlTagName
+  \ +<\@1<=/\?[^ /!?<>"']\++
+  \ contained
+  \ display
+
+" FIXME:
 "  Currently, we must put a space after the '<' in JS
 "  to prevent them from being recognized as XML starting.
 syntax region htmlRegion
@@ -82,11 +87,6 @@ syntax match scriptEndTag
   \ "</script>"
   \ contained
   \ contains=htmlTagName
-
-syntax match htmlTagName
-  \ +<\@1<=/\?[^ /!?<>"']\++
-  \ contained
-  \ display
 
 highlight default link customTag Type
 highlight default link customEndTag Type

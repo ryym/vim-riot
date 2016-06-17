@@ -2,9 +2,9 @@
 
 [![License](http://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 
-This is a Vim plugin to provide syntax highlighting and indenting for
-[Riot.js] custom tags. [Riot custom tag] contains HTML, CSS and JS in it.
-The implementation is based on [vim-jsx].
+This is a Vim plugin to provide syntax highlighting and indentation for
+[Riot.js] custom tags. [Riot custom tag] contains HTML, CSS and JS in a single file.
+The implementation of the indent file is based on [vim-jsx].
 
 Note that [vim-javascript] is required to use this plugin.
 
