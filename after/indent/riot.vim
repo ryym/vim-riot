@@ -8,12 +8,15 @@ endif
 
 " --- dependencies ---
 
+" Use XML indentation becase it is
+" more small and simple than the HTML one.
 unlet! b:did_indent
 runtime! indent/xml.vim
 
 unlet! b:did_indent
 runtime! indent/css.vim
 
+" We need pangloss/vim-javascript.
 unlet! b:did_indent
 for path in split(&runtimepath, ',')
   if filereadable(path . 'indent/javascript.vim')
@@ -27,7 +30,7 @@ setlocal indentexpr=GetRiotIndent()
 
 " JS indentkeys
 setlocal indentkeys=0{,0},0),0],0\,,!^F,o,O,e
-" XML indentkeys
+" HTML indentkeys
 setlocal indentkeys+=*<Return>,<>>,<<>
 
 " Multiline end tag regex (line beginning with '>' or '/>')
@@ -43,18 +46,8 @@ function! s:GetSynNamesAtEOL(lnum)
   return map(synstack(lnum, col), 'synIDattr(v:val, "name")')
 endfunction
 
-" Check if a syntax attribute is XMLish.
-function! SynAttrXMLish(synattr)
-  return a:synattr =~ "^xml" || a:synattr == "jsBlockInHtml"
-endfunction
-
-" Check if a synstack is XMLish (i.e., has an XMLish last attribute).
-function! SynXMLish(syns)
-  return SynAttrXMLish(get(a:syns, -1))
-endfunction
-
-function! s:SeemsXmlSyntax(synattr)
-  return a:synattr =~ "^xml" || a:synattr == "jsBlockInHtml"
+function! s:SeemsHtmlSyntax(synattr)
+  return a:synattr =~ "^html" || a:synattr == "jsBlockInHtml"
 endfunction
 
 function! s:SeemsCssSyntax(synattr)
@@ -66,11 +59,7 @@ function! GetRiotIndent()
   let prevSyntaxes = <SID>GetSynNamesAtEOL(v:lnum - 1)
   let lastPrevSyn = get(prevSyntaxes, -1)
 
-  " if getline(v:lnum - 1) =~? '>$'
-  "   return indent(v:lnum) + &sw
-  " endif
-
-  if <SID>SeemsXmlSyntax(lastPrevSyn)
+  if <SID>SeemsHtmlSyntax(lastPrevSyn)
     let ind = XmlIndentGet(v:lnum, 0)
 
     if getline(v:lnum) =~? s:endtag
