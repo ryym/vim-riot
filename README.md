@@ -29,5 +29,5 @@ Plug 'ryym/vim-riot'
 
 ```bash
 cd ~/.vim/bundle
-git clone https://gihtub.com/ryym/vim-riot.git
+git clone https://github.com/ryym/vim-riot.git
 ```
