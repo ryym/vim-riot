@@ -47,7 +47,7 @@ function! s:GetSynNamesAtEOL(lnum)
 endfunction
 
 function! s:SeemsHtmlSyntax(synattr)
-  return a:synattr =~ "^html" || a:synattr == "jsBlockInHtml"
+  return a:synattr =~ '^html' || a:synattr == 'jsBlockInHtml'
 endfunction
 
 function! s:SeemsCssSyntax(synattr)
@@ -66,7 +66,7 @@ function! GetRiotIndent()
   let lastPrevSyn = get(prevSyntaxes, -1)
 
   if <SID>IsSpecialTag(prevSyntaxes)
-    return indent(v:lnum) + &sw
+    return indent(v:lnum) + &shiftwidth
   endif
 
   if <SID>SeemsHtmlSyntax(lastPrevSyn)
@@ -74,10 +74,10 @@ function! GetRiotIndent()
 
     if getline(v:lnum) =~? s:endtag
       " Align '/>' and '>' with '<' for multiline tags.
-      let ind = ind - &sw
+      let ind = ind - &shiftwidth
     elseif getline(v:lnum - 1) =~? s:endtag
       " Correct the indentation of any tags following '/>' or '>'.
-      let ind = ind + &sw
+      let ind = ind + &shiftwidth
     endif
 
     return ind
@@ -86,7 +86,6 @@ function! GetRiotIndent()
   if <SID>SeemsCssSyntax(lastPrevSyn)
     return GetCSSIndent()
   endif
-
 
   return GetJavascriptIndent()
 endfunction

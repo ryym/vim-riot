@@ -20,10 +20,10 @@ unlet! b:current_syntax
 " --- dependencies ---
 
 syntax region riotCustomTag
-  \ keepend
-  \ contains=customTag,styleRegion,scriptRegion,@JS,htmlRegion,customEndTag
   \ start=+^<\z([^ /!?<>"']\+\)>+
   \ end=+^</\z1>+
+  \ keepend
+  \ contains=customTag,styleRegion,scriptRegion,@JS,htmlRegion,customEndTag
   \ fold
 
 syntax region topLevelComment
@@ -42,7 +42,8 @@ syntax match customEndTag
 
 " FIXME: htmlValue should not contain htmlArg and htmlString
 syntax match htmlValue
-  \ contained "=[\t ]*[^'" \t>][^ \t>]*"hs=s+1
+  \ +=[\t ]*[^'\" \t>][^ \t>]*+hs=s+1
+  \ contained
   \ contains=htmlArg,htmlString,javaScriptExpression,@htmlPreproc
 
 " Expressions enclosed in curly braces should color as JS.
@@ -62,47 +63,50 @@ syntax match htmlTagName
 "  Currently, we must put a space after the '<' in JS
 "  to prevent them from being recognized as XML starting.
 syntax region htmlRegion
+  \ start=+^\@<!<[^ =<]+
+  \ end=+>+
   \ contained
   \ contains=@HTML,jsBlockInHtml
-  \ start="^\@<!<[^ =<]"
-  \ end=">"
   \ keepend
 
 syntax region styleRegion
-  \ contained
+  \ start=+\s\+<style\(\s\+scoped\)\?>+
+  \ end=+</style>+
   \ keepend
+  \ contained
   \ contains=@CSS,styleTag
-  \ start="\s\+<style\(\s\+scoped\)\?>"
-  \ end="</style>"
   \ fold
 
 syntax match styleTag
-  \ "\s\+<style\(\s\+scoped\)\?>"
+  \ +\s\+<style\(\s\+scoped\)\?>+
   \ contained
   \ contains=htmlTagName,styleTagAttr
 
-syntax keyword styleTagAttr contained scoped
+syntax keyword styleTagAttr scoped
+  \ contained
 
 syntax region scriptRegion
-  \ contained
+  \ start=+\s\+<script\(\s\+[^>]\+\)\?>+
+  \ end=+</script>+
   \ keepend
+  \ contained
   \ contains=scriptTag,@JS,scriptEndTag
-  \ start="\s\+<script\(\s\+[^>]\+\)\?>"
-  \ end="</script>"
   \ fold
 
 syntax match scriptTag
-  \ "\s\+<script\(\s\+[^>]\+\)\?>"
+  \ +\s\+<script\(\s\+[^>]\+\)\?>+
   \ contained
   \ contains=htmlValue,htmlString,htmlTagName
 
 syntax match scriptEndTag
-  \ "</script>"
+  \ +</script>+
   \ contained
   \ contains=htmlTagName
 
 " Override jsImportContainer to allow spaces before `import`s.
-syntax region jsImportContainer start="^\s\+import \?" end=";\|$"
+syntax region jsImportContainer
+  \ start=+^\s\+import \?+
+  \ end=+;\|$+
   \ contains=jsModules,jsModuleWords,jsLineComment,jsComment,jsStringS,jsStringD,jsTemplateString,jsNoise,jsBlock
 
 highlight default link customTag Type
@@ -111,4 +115,4 @@ highlight default link scriptTag htmlTag
 highlight default link scriptEndTag htmlEndTag
 highlight default link styleTagAttr htmlTag
 
-let b:current_syntax = "riot"
+let b:current_syntax = 'riot'
