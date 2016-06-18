@@ -26,6 +26,12 @@ syntax region riotCustomTag
   \ end=+^</\z1>+
   \ fold
 
+syntax region topLevelComment
+  \ start=+^<!+
+  \ end=+>+
+  \ keepend
+  \ contains=htmlComment
+
 syntax match customTag
   \ +^<[^ /!?<>"']\+>+
   \ contained
