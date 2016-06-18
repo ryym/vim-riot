@@ -54,10 +54,20 @@ function! s:SeemsCssSyntax(synattr)
   return a:synattr =~ '^css'
 endfunction
 
+function! s:IsSpecialTag(syntaxes)
+  return index(a:syntaxes, 'customTag') >= 0
+    \ || index(a:syntaxes, 'styleTag') >= 0
+    \ || index(a:syntaxes, 'scriptTag') >= 0
+endfunction
+
 " Get indents inferred from the current context.
 function! GetRiotIndent()
   let prevSyntaxes = <SID>GetSynNamesAtEOL(v:lnum - 1)
   let lastPrevSyn = get(prevSyntaxes, -1)
+
+  if <SID>IsSpecialTag(prevSyntaxes)
+    return indent(v:lnum) + &sw
+  endif
 
   if <SID>SeemsHtmlSyntax(lastPrevSyn)
     let ind = XmlIndentGet(v:lnum, 0)
@@ -76,6 +86,7 @@ function! GetRiotIndent()
   if <SID>SeemsCssSyntax(lastPrevSyn)
     return GetCSSIndent()
   endif
+
 
   return GetJavascriptIndent()
 endfunction
