@@ -23,7 +23,7 @@ syntax region riotCustomTag
   \ start=+^<\z([^ /!?<>"']\+\)>+
   \ end=+^</\z1>+
   \ keepend
-  \ contains=customTag,styleRegion,scriptRegion,@JS,htmlRegion,customEndTag
+  \ contains=customTag,styleRegion,scriptRegion,@JS,htmlRegion,customEndTag,javaScriptExpression
   \ fold
 
 syntax region topLevelComment
@@ -90,7 +90,7 @@ syntax region scriptRegion
   \ end=+</script>+
   \ keepend
   \ contained
-  \ contains=scriptTag,@JS,scriptEndTag
+  \ contains=scriptTag,@JS,scriptEndTag,javaScriptExpression
   \ fold
 
 syntax match scriptTag
