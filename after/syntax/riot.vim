@@ -103,12 +103,6 @@ syntax match scriptEndTag
   \ contained
   \ contains=htmlTagName
 
-" Override jsImportContainer to allow spaces before `import`s.
-syntax region jsImportContainer
-  \ start=+^\s\+import \?+
-  \ end=+;\|$+
-  \ contains=jsModules,jsModuleWords,jsLineComment,jsComment,jsStringS,jsStringD,jsTemplateString,jsNoise,jsBlock
-
 highlight default link customTag Type
 highlight default link customEndTag Type
 highlight default link scriptTag htmlTag
