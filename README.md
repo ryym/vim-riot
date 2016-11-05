@@ -31,3 +31,7 @@ Plug 'ryym/vim-riot'
 cd ~/.vim/bundle
 git clone https://github.com/ryym/vim-riot.git
 ```
+
+## Sample Image
+
+![syntax highlight sample](https://raw.githubusercontent.com/ryym/i/master/vim-riot/highlight-sample.png)
