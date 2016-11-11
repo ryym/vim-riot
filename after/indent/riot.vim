@@ -47,27 +47,17 @@ function! s:GetSynNamesAtEOL(lnum)
 endfunction
 
 function! s:SeemsHtmlSyntax(synattr)
-  return a:synattr =~ '^html' || a:synattr == 'jsBlockInHtml'
+  return a:synattr =~ '^html' || a:synattr =~ 'Tag' || a:synattr == 'jsBlockInHtml'
 endfunction
 
 function! s:SeemsCssSyntax(synattr)
   return a:synattr =~ '^css'
 endfunction
 
-function! s:IsSpecialTag(syntaxes)
-  return index(a:syntaxes, 'customTag') >= 0
-    \ || index(a:syntaxes, 'styleTag') >= 0
-    \ || index(a:syntaxes, 'scriptTag') >= 0
-endfunction
-
 " Get indents inferred from the current context.
 function! GetRiotIndent()
   let prevSyntaxes = <SID>GetSynNamesAtEOL(v:lnum - 1)
   let lastPrevSyn = get(prevSyntaxes, -1)
-
-  if <SID>IsSpecialTag(prevSyntaxes)
-    return indent(v:lnum) + &shiftwidth
-  endif
 
   if <SID>SeemsHtmlSyntax(lastPrevSyn)
     let ind = XmlIndentGet(v:lnum, 0)
