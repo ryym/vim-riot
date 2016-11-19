@@ -77,5 +77,9 @@ function! GetRiotIndent()
     return GetCSSIndent()
   endif
 
-  return GetJavascriptIndent()
+  " JavaScript in a Riot tag file is usually indented but
+  " GetJavaScriptIndent doesn't continue the indentation on top level scope.
+  " So we return the current indentation when the function returns 0.
+  let jsIndent = GetJavascriptIndent()
+  return jsIndent ? jsIndent : indent(v:lnum)
 endfunction
