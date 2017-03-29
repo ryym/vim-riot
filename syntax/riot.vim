@@ -20,7 +20,7 @@ unlet! b:current_syntax
 " --- dependencies ---
 
 syntax region riotCustomTag
-  \ start=+^<\z([^ /!?<>"']\+\)>+
+  \ start=+^<\z([^ /!?<>"']\+\)\%(\s\+[^>]*\)\?>+
   \ end=+^</\z1>+
   \ keepend
   \ contains=customTag,styleRegion,scriptRegion,@JS,htmlRegion,customEndTag,javaScriptExpression
@@ -33,8 +33,9 @@ syntax region topLevelComment
   \ contains=htmlComment
 
 syntax match customTag
-  \ +^<[^ /!?<>"']\+>+
+  \ +^<[^ /!?<>"']\+\%(\s\+[^>]*\)\?>+
   \ contained
+  \ contains=htmlString,jsBlock
 
 syntax match customEndTag
   \ +^</[^ /!?<>"']\+>+
