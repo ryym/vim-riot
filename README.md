@@ -6,7 +6,8 @@ This is a Vim plugin to provide syntax highlighting and indentation for
 [Riot.js] custom tags. [Riot custom tag] contains HTML, CSS and JS in a single file.
 The implementation of the indent file is based on [vim-jsx].
 
-**Note that [vim-javascript] is required** to use this plugin.
+**Note that [pangloss/vim-javascript] is required** to use this plugin.
+(This javascript syntax plugin is included in Vim by default from [v7.4.2205](https://github.com/vim/vim/blob/v7.4.2205/runtime/indent/javascript.vim)).
 
 [Riot.js]: http://riotjs.com/
 [Riot custom tag]: http://riotjs.com/guide
