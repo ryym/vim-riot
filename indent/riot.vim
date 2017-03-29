@@ -16,13 +16,8 @@ runtime! indent/xml.vim
 unlet! b:did_indent
 runtime! indent/css.vim
 
-" We need pangloss/vim-javascript.
 unlet! b:did_indent
-for path in split(&runtimepath, ',')
-  if filereadable(path . 'indent/javascript.vim')
-    execute 'source ' . path . 'indent/javascript.vim'
-  endif
-endfor
+runtime! indent/javascript.vim
 
 " --- dependencies ---
 
